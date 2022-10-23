@@ -3,7 +3,10 @@
     <Header label="Выбор магазина" />
     <div class="stores__items border-b border-b-gray-400">
       <h2 class="text-xl text-red-400 pt-2">Выбор магазина</h2>
-      <p v-if="store.state.savedItem" class="mb-2 text-xs text-gray-400">
+      <p
+        v-if="Object.keys(store.state.savedItem).length !== 0"
+        class="mb-2 text-xs text-gray-400"
+      >
         Сохранено: {{ store.state.savedItem.position_name }}
       </p>
       <p v-else class="mb-2 text-xs">Укажите магазин, в котором находитесь</p>
@@ -29,17 +32,25 @@
           type="text"
           class="border-2 h-8 pl-2 rounded mb-2"
           placeholder="Название магазина"
+          v-model="data.newStoreName"
         />
         <input
           type="text"
           class="border-2 h-8 pl-2 rounded mb-2"
           placeholder="Адрес магазина"
+          v-model="data.newStoreAddress"
         />
-        <input
-          type="submit"
-          class="bg-blue-400 h-12 rounded text-white font-bold"
-          value="Сохранить и выбрать"
-        />
+        <router-link
+          class="bg-blue-400 text-white text-center p-2 rounded font-bold"
+          :to="{
+            name: 'Barcode',
+            query: {
+              storelocation: data.newStoreAddress,
+              storename: data.newStoreName,
+            },
+          }"
+          >Сохранить и выбрать</router-link
+        >
       </div>
     </div>
   </section>
@@ -47,13 +58,18 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
 import Header from "./Header.vue";
 import axios from "axios";
 
 const store = useStore();
 const router = useRouter();
+
+const data = reactive({
+  newStoreName: "",
+  newStoreAddress: "",
+});
 
 const getStores = async () => {
   const response = await axios
