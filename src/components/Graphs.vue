@@ -1,9 +1,18 @@
 <template>
-  <h2 class="text-xl mb-4">
-    Закупочная цена:
-    <span class="text-green-400">{{ Math.max(...Object.values(myStore[0])) }}</span>
-  </h2>
-  <Line :chart-data="data.chartData" />
+  <div class="flex justify-between">
+    <h2 class="text-md mb-4">
+      Закупочная цена:
+      <span class="text-green-400">{{ Math.max(myStore[0].datasets[0].data) }}</span>
+    </h2>
+    <h2 class="text-md mb-4">
+      Остаток:
+      <span class="text-green-400">{{ store.state.item.position_count }}</span>
+    </h2>
+  </div>
+  <Line height="200" :chart-data="myStore[0]" :chart-options="chartOptions" />
+  <div @click="log(s)" class="competitor" v-for="(s, index) in stores" :key="index">
+    <Line height="200" :chart-data="s" :chart-options="competitorOptions" />
+  </div>
 </template>
 
 <script setup>
@@ -33,31 +42,31 @@ ChartJS.register(
   LineElement
 );
 
+const log = (s) => {
+  console.log(s);
+};
+
 const store = useStore();
 
 const myStore = JSON.parse(
   JSON.stringify(Object.values(store.state.item.main_store_price))
 );
+Object.assign(myStore[0].datasets[1]);
+console.log(myStore[0].datasets[1]);
 
-const dates = Object.keys(myStore[0]).map((e) => e.split("e")[1]);
+const stores = JSON.parse(
+  JSON.stringify(Object.values(store.state.item.single_store_price))
+);
 
-const data = reactive({
-  chartData: {
-    labels: dates,
-    datasets: [
-      {
-        label: "Закупочные цены",
-        backgroundColor: "rgb(74 222 128)",
-        data: Object.values(myStore[0]),
-      },
-      {
-        label: "Розничные цены",
-        backgroundColor: "rgb(248 113 113)",
-        data: Object.values(myStore[1]),
-      },
-    ],
-  },
-});
+const chartOptions = {
+  responsive: true,
+  backgroundColor: ["green", "yellow"],
+};
+
+const competitorOptions = {
+  responsive: true,
+  backgroundColor: "red",
+};
 </script>
 
 <style lang="scss" scoped></style>

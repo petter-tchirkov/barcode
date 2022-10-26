@@ -105,7 +105,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const data = reactive({
-  barcode: "4820017000024",
+  barcode: "",
   changed: false,
 });
 
