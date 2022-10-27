@@ -121,9 +121,9 @@ const data = reactive({
 const setInputFocus = () => {
   barcode.value.readOnly = true;
   barcode.value.focus();
-  setTimeout(() => {
-    barcode.value.readOnly = false;
-  }, 100);
+  // setTimeout(() => {
+  //   barcode.value.readOnly = false;
+  // }, 100);
 };
 
 const sendBarcode = async () => {
