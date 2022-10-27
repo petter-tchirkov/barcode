@@ -9,8 +9,10 @@
     />
     <input
       class="border-2 h-8 pl-2 rounded mb-2 w-full"
-      type="text"
       placeholder="Укажите цену"
+      type="number"
+      pattern="[0-9]*"
+      inputmode="numeric"
       v-model="data.positionPrice"
     />
     <button
@@ -63,7 +65,10 @@ const sendPosition = async () => {
       const saved = response.data;
       Object.assign(saved, { position_name: data.positionName });
       store.dispatch("setSavedStore", saved);
-      router.push("/barcode");
+      router.replace({
+        path: "/barcode",
+        query: { storeid: store.storeid, storename: store.storename },
+      });
     });
 };
 </script>

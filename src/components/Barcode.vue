@@ -10,6 +10,7 @@
         v-model="data.barcode"
         pattern="\d*"
         @input="sendBarcode"
+        readonly
       />
       <p
         v-if="Object.keys(store.state.savedItem).length !== 0"
@@ -118,10 +119,10 @@ const data = reactive({
 });
 
 const setInputFocus = () => {
-  barcode.readOnly = true;
+  barcode.value.readOnly = true;
   barcode.value.focus();
   setTimeout(() => {
-    barcode.readOnly = false;
+    barcode.value.readOnly = false;
   }, 100);
 };
 
@@ -131,7 +132,7 @@ const sendBarcode = async () => {
       section: "checkbarcode",
       token: store.state.user.token,
       id: store.state.user.id,
-      storeid: route.query.storeid,
+      storeid: store.state.store.storeid,
       barcode: data.barcode,
     })
     .then((response) => {
@@ -140,7 +141,11 @@ const sendBarcode = async () => {
       store.dispatch("requestItems", dataObject);
       router.replace({
         path: "/item",
-        query: { storeid: store.storeid, storename: store.storename },
+        query: {
+          id: store.state.user.id,
+          storeid: store.state.store.storeid,
+          storename: store.state.store.storename,
+        },
       });
     });
 };
