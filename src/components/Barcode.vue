@@ -10,7 +10,6 @@
         v-model="data.barcode"
         inputmode="none"
         @input="sendBarcode"
-        readonly
       />
       <p
         v-if="Object.keys(store.state.savedItem).length !== 0"
@@ -121,9 +120,10 @@ const data = reactive({
 const setInputFocus = () => {
   barcode.value.readOnly = true;
   barcode.value.focus();
+  console.log(barcode.value.getAttribute("inputmode"));
   setTimeout(() => {
-    barcode.value.readOnly = false;
-    console.log(barcode.value.readOnly);
+    barcode.value.setAttribute("inputmode", "text");
+    console.log(barcode.value.getAttribute("inputmode"));
   }, 100);
 };
 
