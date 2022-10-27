@@ -10,6 +10,7 @@
         pattern="\d*"
         v-model="data.barcode"
         @input="sendBarcode"
+        @click="setInputFocus"
       />
       <p
         v-if="Object.keys(store.state.savedItem).length !== 0"
