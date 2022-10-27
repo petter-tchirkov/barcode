@@ -7,6 +7,7 @@
         type="text"
         placeholder="Barcode"
         ref="barcode"
+        pattern="\d*"
         v-model="data.barcode"
         @input="sendBarcode"
       />
@@ -162,7 +163,7 @@ const addNumber = (number) => {
 
 const handleClear = () => {
   data.barcode = "";
-  barcode.value.focus();
+  setInputFocus();
 };
 
 onMounted(() => {
