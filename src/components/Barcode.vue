@@ -8,7 +8,6 @@
         placeholder="Barcode"
         ref="barcode"
         v-model="data.barcode"
-        inputmode="none"
         @input="sendBarcode"
       />
       <p
@@ -118,13 +117,7 @@ const data = reactive({
 });
 
 const setInputFocus = () => {
-  barcode.value.readOnly = true;
   barcode.value.focus();
-  console.log(barcode.value.getAttribute("inputmode"));
-  setTimeout(() => {
-    barcode.value.setAttribute("inputmode", "text");
-    console.log(barcode.value.getAttribute("inputmode"));
-  }, 100);
 };
 
 const sendBarcode = async () => {
