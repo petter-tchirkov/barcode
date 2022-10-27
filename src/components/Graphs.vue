@@ -2,7 +2,7 @@
   <div class="flex justify-between">
     <h2 class="text-md mb-4">
       Закупочная цена:
-      <span class="text-green-400">{{ Math.max(myStore[0].datasets[0].data) }}</span>
+      <span class="text-green-400">{{ store.state.item.position_lastbuyprice }}</span>
     </h2>
     <h2 class="text-md mb-4">
       Остаток:

@@ -34,8 +34,8 @@ import store from "../store";
 import { useRouter } from "vue-router";
 
 const loginData = reactive({
-  login: "",
-  password: "",
+  login: "Admin",
+  password: "321",
 });
 
 const error = reactive({ text: "" });

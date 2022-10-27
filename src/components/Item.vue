@@ -43,7 +43,7 @@ import Graphs from "./Graphs.vue";
 const store = useStore();
 const route = useRoute();
 const data = reactive({
-  positionName: "",
+  positionName: store.state.item.position_name,
   positionPrice: "",
 });
 
@@ -56,14 +56,14 @@ const sendPosition = async () => {
       storeid: store.state.store.storeid,
       barcode: store.state.item.barcode,
       position_name: data.positionName,
-      position_id: "",
+      position_id: store.state.item.position_id,
       newprice: data.positionPrice,
     })
     .then((response) => {
       const saved = response.data;
       Object.assign(saved, { position_name: data.positionName });
       store.dispatch("setSavedStore", saved);
-      router.push("/");
+      router.push("/barcode");
     });
 };
 </script>

@@ -2,7 +2,8 @@ import { createStore } from "vuex";
 import VuexPersister from "vuex-persister";
 
 const vuexPersister = new VuexPersister({
-  // ...your options
+  overwrite: true,
+  storage: sessionStorage,
 });
 
 const store = createStore({
@@ -12,6 +13,7 @@ const store = createStore({
     store: {},
     item: {},
     savedItem: {},
+    storeName: "Выберите магазин",
   }),
   getters: {
     user(state) {
@@ -34,6 +36,13 @@ const store = createStore({
     SET_SAVED_ITEM(state, payload) {
       state.savedItem = payload;
     },
+    EMPTY_SAVED_ITEM(state) {
+      state.savedItem = {};
+    },
+    RESET_STATE(state) {
+      state = {};
+      console.log(state);
+    },
   },
   actions: {
     saveUser({ commit }, data) {
@@ -50,6 +59,13 @@ const store = createStore({
     },
     setSavedStore({ commit }, data) {
       commit("SET_SAVED_ITEM", data);
+    },
+    emptySavedStore({ commit }, data) {
+      commit("EMPTY_SAVED_ITEM", data);
+    },
+    resetState({ commit }, data) {
+      commit("RESET_STATE", data);
+      console.log("state reset");
     },
   },
   plugins: [vuexPersister.persist], // integrate the plugin

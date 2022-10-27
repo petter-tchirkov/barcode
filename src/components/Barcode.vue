@@ -1,6 +1,6 @@
 <template>
   <div class="barcode px-4 pt-2">
-    <Header :label="route.query.storename" />
+    <Header :label="store.state.store.storename" />
     <form class="barcode__form pt-8">
       <input
         class="border-2 h-8 pl-2 rounded mb-8 w-full"
@@ -8,7 +8,15 @@
         placeholder="Barcode"
         ref="barcode"
         v-model="data.barcode"
+        pattern="\d*"
+        @input="sendBarcode"
       />
+      <p
+        v-if="Object.keys(store.state.savedItem).length !== 0"
+        class="mb-2 text-xs text-gray-400"
+      >
+        Сохранено: {{ store.state.savedItem.position_name }}
+      </p>
       <button
         class="bg-blue-400 h-12 rounded text-white font-bold w-full mb-2"
         @click.prevent="sendBarcode"
@@ -105,9 +113,17 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const data = reactive({
-  barcode: "",
+  barcode: "4820017001632",
   changed: false,
 });
+
+const setInputFocus = () => {
+  barcode.readOnly = true;
+  barcode.value.focus();
+  setTimeout(() => {
+    barcode.readOnly = false;
+  }, 100);
+};
 
 const sendBarcode = async () => {
   const response = await axios
@@ -145,7 +161,7 @@ const handleClear = () => {
 };
 
 onMounted(() => {
-  barcode.value.focus();
+  setInputFocus();
 });
 </script>
 

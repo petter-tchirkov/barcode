@@ -3,13 +3,7 @@
     <Header label="Выбор магазина" />
     <div class="stores__items border-b border-b-gray-400">
       <h2 class="text-xl text-red-400 pt-2">Выбор магазина</h2>
-      <p
-        v-if="Object.keys(store.state.savedItem).length !== 0"
-        class="mb-2 text-xs text-gray-400"
-      >
-        Сохранено: {{ store.state.savedItem.position_name }}
-      </p>
-      <p v-else class="mb-2 text-xs">Укажите магазин, в котором находитесь</p>
+      <p class="mb-2 text-xs">Укажите магазин, в котором находитесь</p>
       <router-link
         :to="{
           name: 'Barcode',
@@ -85,6 +79,7 @@ const getStores = async () => {
 };
 
 const setStore = (storeItem) => {
+  store.dispatch("emptySavedStore");
   store.dispatch("saveStore", storeItem);
 };
 
