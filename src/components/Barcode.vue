@@ -8,7 +8,7 @@
         placeholder="Barcode"
         ref="barcode"
         v-model="data.barcode"
-        pattern="\d*"
+        inputmode="none"
         @input="sendBarcode"
         readonly
       />
@@ -121,9 +121,10 @@ const data = reactive({
 const setInputFocus = () => {
   barcode.value.readOnly = true;
   barcode.value.focus();
-  // setTimeout(() => {
-  //   barcode.value.readOnly = false;
-  // }, 100);
+  setTimeout(() => {
+    barcode.value.readOnly = false;
+    console.log(barcode.value.readOnly);
+  }, 100);
 };
 
 const sendBarcode = async () => {
