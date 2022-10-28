@@ -159,7 +159,7 @@ const addNumber = (number) => {
   } else {
     data.barcode = data.barcode + number;
   }
-  barcode.value.focus();
+  setInputFocus();
 };
 
 const handleClear = () => {
